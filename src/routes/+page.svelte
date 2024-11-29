@@ -42,7 +42,7 @@
     };
 
     audio.onended = () => {
-      isPlaying.set(false);
+      nextSong(); 
     };
   }
 
@@ -82,6 +82,18 @@
     const seconds = Math.floor(time % 60).toString().padStart(2, "0");
     return `${minutes}:${seconds}`;
   }
+
+  function nextSong() {
+    const currentIndex = playlist.indexOf(selectedSong);
+    const nextIndex = (currentIndex + 1) % playlist.length; // Davriy o'tish
+    selectSong(playlist[nextIndex]);
+  }
+
+  function prevSong() {
+    const currentIndex = playlist.indexOf(selectedSong);
+    const prevIndex = (currentIndex - 1 + playlist.length) % playlist.length; // Davriy o'tish
+    selectSong(playlist[prevIndex]);
+  }
 </script>
 
 <div class="player bg-gray-100 p-5 rounded-lg shadow-lg max-w-md mx-auto text-center">
@@ -105,6 +117,9 @@
   </div>
 
   <div class="controls flex justify-between items-center my-5">
+    <button on:click={prevSong} class="text-xl text-gray-600 hover:text-gray-800">
+      <i class="fa-solid fa-backward"></i> Oldingi
+    </button>
     <button on:click={() => skip(-15)} class="text-xl text-gray-600 hover:text-gray-800">
       <i class="fa-solid fa-backward-step"></i>
     </button>
@@ -113,6 +128,9 @@
     </button>
     <button on:click={() => skip(15)} class="text-xl text-gray-600 hover:text-gray-800">
       <i class="fa-solid fa-forward-step"></i>
+    </button>
+    <button on:click={nextSong} class="text-xl text-gray-600 hover:text-gray-800">
+      Keyingi <i class="fa-solid fa-forward"></i>
     </button>
   </div>
 
@@ -146,4 +164,3 @@
     />
   </div>
 </div>
-<style></style>
