@@ -1,7 +1,9 @@
-import adapter from "@sveltejs/adapter-vercel";
+import adapter from "@sveltejs/adapter-node";
 
 export default {
   kit: {
-    adapter: adapter(),
+    adapter: adapter({
+      out: "build", // build uchun papka nomi
+    }),
   },
 };
